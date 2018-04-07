@@ -52,6 +52,7 @@ namespace TwinStrings
             // followed by count at odd position.
             string encoding = "";
             for (int i = 0; i < MAX_CHAR; i++)
+
             {
                 encoding += hashEven[i].ToString();
                 encoding += '-';
@@ -61,7 +62,7 @@ namespace TwinStrings
             return encoding;
         }
 
-
+        // code taken from https://pastebin.com/mxpWqcHQ
         static string[] twinsHashed(string[] a, string[] b)
         {
             string[] results = new string[a.GetLength(0)];

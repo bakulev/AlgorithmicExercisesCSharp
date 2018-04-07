@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TwinStrings
 {
@@ -25,6 +26,7 @@ namespace TwinStrings
         // can become same after swapping a even positioned character
         // with other even characters OR swapping an odd character
         // with other odd characters.
+        // code taken from https://www.geeksforgeeks.org/distinct-strings-odd-even-changes-allowed/
         static string encodeString(char[] text)
         {
             // maximum char number
@@ -59,11 +61,8 @@ namespace TwinStrings
             return encoding;
         }
 
-        /*
-         * Complete the function below.
-         * DO NOT MODIFY CODE OUTSIDE THIS FUNCTION!
-         */
-        static string[] twins(string[] a, string[] b)
+
+        static string[] twinsHashed(string[] a, string[] b)
         {
             string[] results = new string[a.GetLength(0)];
             for (int i = 0; i < a.GetLength(0); i++)
@@ -87,6 +86,49 @@ namespace TwinStrings
             return results;
 
         }
+
+        static string[] twinsSimple(string[] a, string[] b)
+        {
+            var r = new string[a.Length];
+            for (var i = -1; ++i < a.Length;)
+            {
+                string itemA = a[i], itemB = b[i];
+                var isTwin = itemA.Length == itemB.Length;
+                if (isTwin)
+                {
+                    var map = new Dictionary<char, int[]>(itemA.Length);
+                    for (var j = -1; ++j < itemB.Length;)
+                    {
+                        if (!map.ContainsKey(itemB[j]))
+                            map[itemB[j]] = new int[2];
+                        ++map[itemB[j]][j & 1];
+                    }
+                    for (var j = -1; ++j < itemA.Length;)
+                    {
+                        if (map.ContainsKey(itemA[j]) && map[itemA[j]][j & 1] > 0)
+                            --map[itemA[j]][j & 1];
+                        else
+                        {
+                            isTwin = false;
+                            break;
+                        }
+                    }
+                }
+                r[i] = isTwin ? "Yes" : "No";
+            }
+            return r;
+        }
+
+        /*
+         * Complete the function below.
+         * DO NOT MODIFY CODE OUTSIDE THIS FUNCTION!
+         */
+        static string[] twins(string[] a, string[] b)
+        {
+            //return twinsHashed(a, b);
+            return twinsSimple(a, b);
+        }
+
         // DO NOT MODIFY CODE OUTSIDE THE ABOVE FUNCTION!
 
         static void Main(String[] args)

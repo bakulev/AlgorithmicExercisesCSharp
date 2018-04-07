@@ -56,4 +56,10 @@ Given *a = ["cdab", "dcba"]* and *b = ["abcd", "abcd"]*, we process each element
 2. *a1 = "dcba"* and *b1 = "abcd"*: We store No in index *1* of the return array because no amount of operations will move a character from an odd index to an even index, so the two strings will never be equal.
 We then return the array *["Yes", "No"]* as our answer.
 
+## Solution
+
+A **simple solution** is to run two loops. The outer loop picks a string and inner loop checks if there is a previously string which can be converted to current string by doing allowed transformations. This solution requires O(n2m) time where n is number of strings and m is maximum number of characters in any string.
+
+An **efficient solution** generate an encoded string for every input string. The encoded has counts of even and odd positioned characters separated by a separator. Two strings are considered distinct if their encoded strings are same else not. Once we have a way to encode string, the problem reduces to counting distinct encoded strings. This is a typical problem of hashing. We create hash set and one by one store encodings of strings. If an encoding already exists, we ignore string. Else we store encoding in hash and increment count of distinct strings. 
+
 P.S. Feel free to correct this exercise for better view, performance or something else.
